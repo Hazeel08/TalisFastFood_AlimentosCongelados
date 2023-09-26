@@ -5,10 +5,6 @@
  */
 package model;
 
-/**
- *
- * @author Alberto
- */
 public class Provincia {
 
     float cod_provincia;
