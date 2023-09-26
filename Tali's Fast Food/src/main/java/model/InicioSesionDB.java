@@ -12,10 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 
-/**
- *
- * @author steve
- */
 public class InicioSesionDB {
 
     Connection con;
