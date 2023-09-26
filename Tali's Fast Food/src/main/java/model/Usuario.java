@@ -6,10 +6,6 @@ package model;
 
 import enums.*;
 
-/**
- *
- * @author Estudiante
- */
 public class Usuario {
 
     private String nombre;
