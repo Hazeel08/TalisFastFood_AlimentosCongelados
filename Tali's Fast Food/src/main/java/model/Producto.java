@@ -4,10 +4,6 @@
  */
 package model;
 
-/**
- *
- * @author steve
- */
 public class Producto {
     
     private int cod_producto;
