@@ -13,10 +13,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import model.*;
 
-/**
- *
- * @author steve
- */
 public class ManejadorCorreo {
 
     public static boolean correoEnviado(Usuario pUsuario) throws MessagingException {
