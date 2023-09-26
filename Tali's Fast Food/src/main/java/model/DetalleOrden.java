@@ -10,10 +10,6 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.naming.NamingException;
 
-/**
- *
- * @author steve
- */
 public class DetalleOrden {
 
     private int cod_orden;
