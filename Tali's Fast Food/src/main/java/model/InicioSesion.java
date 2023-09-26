@@ -4,10 +4,6 @@
  */
 package model;
 
-/**
- *
- * @author steve
- */
 public class InicioSesion {
 
     private Rol rol;
