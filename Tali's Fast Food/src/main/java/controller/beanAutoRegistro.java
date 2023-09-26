@@ -16,10 +16,6 @@ import util.CommonStrings;
 import util.ManejadorCorreo;
 import util.MessageHelper;
 
-/**
- *
- * @author steve
- */
 public class beanAutoRegistro {
 
     Usuario oUsuario;
