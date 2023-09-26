@@ -10,10 +10,6 @@ import model.AutoRegistroInMemory;
 import model.DireccionDB;
 import model.Direccion;
 
-/**
- *
- * @author steve
- */
 public class beanDirecciones {
 
     public beanDirecciones() {
