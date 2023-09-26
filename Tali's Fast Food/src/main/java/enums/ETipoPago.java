@@ -4,10 +4,6 @@
  */
 package enums;
 
-/**
- *
- * @author steve
- */
 public enum ETipoPago {
     Tarjeta(1),
     Efectivo(2),
