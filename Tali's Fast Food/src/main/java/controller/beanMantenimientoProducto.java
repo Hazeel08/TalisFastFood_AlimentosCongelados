@@ -15,10 +15,6 @@ import org.primefaces.PrimeFaces;
 import util.CommonStrings;
 import util.MessageHelper;
 
-/**
- *
- * @author steve
- */
 public class beanMantenimientoProducto {
 
     private Producto producto;
