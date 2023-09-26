@@ -4,10 +4,6 @@
  */
 package util;
 
-/**
- *
- * @author Daniel
- */
 public class CommonStrings {
 
     public final static String REGISTRO_INSERTADO = "Se insertó el registro exitosamente";
