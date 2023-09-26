@@ -4,10 +4,6 @@
  */
 package enums;
 
-/**
- *
- * @author hcald
- */
 public enum ETipoEntrega {
     EnvioDirecto(1),
     SinEnvio(2),
