@@ -5,10 +5,6 @@
  */
 package model;
 
-/**
- *
- * @author Estudiante
- */
 public class Canton {
 
     float cod_provincia;
