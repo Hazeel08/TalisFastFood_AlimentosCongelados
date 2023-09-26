@@ -13,10 +13,6 @@ import java.security.SecureRandom;
 import model.UsuarioDB;
 import util.ManejadorCorreo;
 
-/**
- *
- * @author hcald
- */
 public class beanCambioClave {
 
     private String cedula;
