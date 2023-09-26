@@ -6,10 +6,6 @@ package model;
 
 import enums.EEstado;
 
-/**
- *
- * @author steve
- */
 public class Estado {
 
     private int cod_estado;
