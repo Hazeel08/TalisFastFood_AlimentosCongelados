@@ -15,10 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 
-/**
- *
- * @author steve
- */
 public class DetalleFacturaDB {
 
     private Connection con;
