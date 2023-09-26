@@ -6,10 +6,6 @@ package model;
 
 import enums.ETipoPago;
 
-/**
- *
- * @author steve
- */
 public class DetalleFactura {
 
     private int cod_detalle_factura;
