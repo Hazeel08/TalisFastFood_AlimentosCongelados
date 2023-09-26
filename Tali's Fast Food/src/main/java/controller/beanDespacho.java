@@ -16,10 +16,6 @@ import model.*;
 import org.primefaces.PrimeFaces;
 import util.*;
 
-/**
- *
- * @author steve
- */
 public class beanDespacho {
 
     private int tipo_envio;
