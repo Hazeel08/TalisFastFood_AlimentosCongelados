@@ -8,10 +8,6 @@ import enums.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
-/**
- *
- * @author steve
- */
 public class PedidoCliente {
 
     private Producto producto;
