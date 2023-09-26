@@ -18,10 +18,6 @@ import javax.naming.NamingException;
 
 import javax.sql.DataSource;
 
-/**
- *
- * @author Alberto
- */
 public class DistritoDB {
 
     private AccesoDatos accesoDatos = new AccesoDatos();
