@@ -13,10 +13,6 @@ import model.*;
 import util.CommonStrings;
 import util.SessionHelper;
 
-/**
- *
- * @author steve
- */
 public class beanPedidoEfectuado {
 
     private Orden orden;
