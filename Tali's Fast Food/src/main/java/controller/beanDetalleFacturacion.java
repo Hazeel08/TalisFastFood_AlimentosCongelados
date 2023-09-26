@@ -15,10 +15,6 @@ import model.AutoRegistroInMemory;
 import model.*;
 import org.primefaces.PrimeFaces;
 
-/**
- *
- * @author steve
- */
 public class beanDetalleFacturacion {
 
     private int tipo_pago;
