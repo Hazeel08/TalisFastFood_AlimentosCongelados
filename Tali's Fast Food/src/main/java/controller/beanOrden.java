@@ -20,10 +20,6 @@ import org.primefaces.PrimeFaces;
 import util.CommonStrings;
 import util.SessionHelper;
 
-/**
- *
- * @author steve
- */
 public class beanOrden {
 
     private int cod_horario;
