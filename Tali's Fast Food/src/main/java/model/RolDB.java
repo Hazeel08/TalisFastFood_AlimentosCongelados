@@ -12,10 +12,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import javax.naming.NamingException;
 
-/**
- *
- * @author steve
- */
 public class RolDB {
 
     Connection con;
