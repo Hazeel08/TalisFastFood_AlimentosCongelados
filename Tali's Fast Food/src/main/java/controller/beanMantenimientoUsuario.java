@@ -23,10 +23,6 @@ import org.primefaces.PrimeFaces;
 import util.CommonStrings;
 import util.ManejadorCorreo;
 
-/**
- *
- * @author steve
- */
 public class beanMantenimientoUsuario {
 
     private int cod_rol;
