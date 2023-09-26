@@ -4,10 +4,6 @@
  */
 package enums;
 
-/**
- *
- * @author steve
- */
 public enum EEstado {
     Pendiente(1),
     Activo(2),
