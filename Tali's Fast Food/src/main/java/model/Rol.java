@@ -6,10 +6,6 @@ package model;
 
 import enums.ETipoRol;
 
-/**
- *
- * @author steve
- */
 public class Rol {
 
     private int cod_rol;
