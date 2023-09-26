@@ -18,11 +18,9 @@ public class beanReportes {
     private FacturaDB facturaDB;
 
     public beanReportes() {
-
         ordenDB = new OrdenDB();
         detalleOrdenDB = new DetalleOrdenDB();
         facturaDB = new FacturaDB();
-
     }
 
     public List<Reporte> getObtenerReportes() throws SNMPExceptions, SQLException, NamingException, ClassNotFoundException {
