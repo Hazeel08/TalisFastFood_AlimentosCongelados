@@ -8,10 +8,6 @@ import enums.*;
 import java.time.LocalDate;
 import java.sql.Date;
 
-/**
- *
- * @author steve
- */
 public class Factura {
 
     private int cod_factura;
