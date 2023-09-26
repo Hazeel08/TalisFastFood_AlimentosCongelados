@@ -12,10 +12,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-/**
- *
- * @author steve
- */
 public class Horario {
 
     private int cod_horario;
