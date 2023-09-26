@@ -15,10 +15,6 @@ import java.sql.Statement;
 import java.util.Properties;
 import javax.naming.NamingException;
 
-/**
- *
- * @author steve
- */
 public class AccesoDatos {
 
     /*Constante que identifica el motor de la base de datos*/
