@@ -8,10 +8,6 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author steve
- */
 public class SessionHelper {
 
     public static void addSession(String key, Object value) {
