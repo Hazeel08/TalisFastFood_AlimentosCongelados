@@ -17,10 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import util.CommonStrings;
 
-/**
- *
- * @author steve
-
+/*
 @WebFilter("/faces/*")
 public class AuthorizationFilter implements Filter {
 
