@@ -8,10 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 
-/**
- *
- * @author steve
- */
 public class MessageHelper {
 
     private static void addMessage(FacesMessage.Severity severity, String summary, String detail) {
