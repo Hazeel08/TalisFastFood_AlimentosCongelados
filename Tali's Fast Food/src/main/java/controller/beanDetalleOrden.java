@@ -15,10 +15,6 @@ import javax.naming.NamingException;
 import model.*;
 import org.primefaces.PrimeFaces;
 
-/**
- *
- * @author steve
- */
 public class beanDetalleOrden implements Serializable {
 
     public int contador;
