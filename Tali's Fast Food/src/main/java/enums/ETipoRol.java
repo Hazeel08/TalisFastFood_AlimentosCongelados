@@ -4,10 +4,6 @@
  */
 package enums;
 
-/**
- *
- * @author steve
- */
 public enum ETipoRol {
     Administrador(1),
     Cliente(2),
