@@ -19,10 +19,6 @@ import javax.naming.NamingException;
 import model.*;
 import util.*;
 
-/**
- *
- * @author steve
- */
 @Named(value = "beanInicioSesion")
 @SessionScoped
 public class beanInicioSesion implements Serializable {
