@@ -7,10 +7,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author steve
- */
 public class AutoRegistroInMemory {
 
     public static List<Direccion> direcciones = new ArrayList<Direccion>();
