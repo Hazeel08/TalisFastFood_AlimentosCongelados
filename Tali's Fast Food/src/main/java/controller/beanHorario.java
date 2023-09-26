@@ -10,10 +10,6 @@ import javax.faces.context.FacesContext;
 import model.*;
 import org.primefaces.PrimeFaces;
 
-/**
- *
- * @author steve
- */
 public class beanHorario {
 
     Horario horario;
