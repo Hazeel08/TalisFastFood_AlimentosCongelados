@@ -9,10 +9,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-/**
- *
- * @author steve
- */
 public class Orden {
 
     private int cod_orden;
