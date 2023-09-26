@@ -20,10 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import org.primefaces.PrimeFaces;
 
-/**
- *
- * @author Alberto
- */
 @Named(value = "beanProvincias")
 @SessionScoped
 public class beanProvincias implements Serializable {
