@@ -17,10 +17,6 @@ import model.UsuarioDB;
 import org.primefaces.PrimeFaces;
 import util.CommonStrings;
 
-/**
- *
- * @author steve
- */
 public class beanDatosCuenta {
 
     private Usuario oUsuario;
