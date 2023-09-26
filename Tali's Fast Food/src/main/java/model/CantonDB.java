@@ -18,10 +18,6 @@ import javax.naming.NamingException;
 
 import javax.sql.DataSource;
 
-/**
- *
- * @author Estudiante
- */
 public class CantonDB {
 
     private AccesoDatos accesoDatos = new AccesoDatos();
