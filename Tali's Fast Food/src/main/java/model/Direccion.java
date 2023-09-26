@@ -7,10 +7,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author steve
- */
 public class Direccion {
 
     private int codigo;
