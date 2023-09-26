@@ -6,10 +6,6 @@ package patrones;
 
 import model.*;
 
-/**
- *
- * @author steve
- */
 public class SingletonUsuario {
 
     private static Usuario usuarioLogueado;
