@@ -12,10 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-/**
- *
- * @author Alberto
- */
 public class ProvinciaDB {
 
     private AccesoDatos accesoDatos = new AccesoDatos();
