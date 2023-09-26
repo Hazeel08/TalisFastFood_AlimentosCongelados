@@ -8,10 +8,6 @@ import enums.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-/**
- *
- * @author steve
- */
 public class Despacho {
 
     private int idDespacho;
