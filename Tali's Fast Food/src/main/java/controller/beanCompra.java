@@ -4,10 +4,6 @@
  */
 package controller;
 
-/**
- *
- * @author steve
- */
 public class beanCompra {
     
 }
