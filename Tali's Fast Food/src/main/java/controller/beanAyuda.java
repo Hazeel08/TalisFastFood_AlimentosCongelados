@@ -7,10 +7,6 @@ package controller;
 import dao.SNMPExceptions;
 import util.ManejadorCorreo;
 
-/**
- *
- * @author hcald
- */
 public class beanAyuda {
 
     private String email;
