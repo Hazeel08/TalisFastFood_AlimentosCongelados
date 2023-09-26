@@ -4,10 +4,6 @@
  */
 package dao;
 
-/**
- *
- * @author steve
- */
 public class SNMPExceptions extends Exception {
     public static final int FILE_NOT_FOUND = 1;
       public static final int IO_EXCEPTION = 2;
