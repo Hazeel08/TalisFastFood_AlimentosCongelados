@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formListadoUsuarios">
+                    <p:separator/>
+                    <div align="center">
+                        <p:commandButton value="Agregar Usuario"
+                                         oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"
+                                         icon="pi pi-bookmark" style="background-color: #2ECCFA; border-radius: 5px;
+                                         border-color: #04B4AE; font-weight: bold; color: black; margin: 0 10px;"/>
+
+                        <p:button value="Usuarios Inactivos" outcome="mantenimientoUsuariosInactivos"
+                                  icon="pi pi-bookmark" style="background-color: #2ECCFA; border-radius: 5px;
+                                  border-color: #04B4AE; font-weight: bold; color: black; margin: 0 10px;"/>
+                    </div>
+
+                    <p:separator/>
+
+                    <div align="center">
+                        <h2>Listado de Usuarios Activos</h2>
+                    </div>
+
+                    <p:dataTable id="tablaUsuarios" widgetVar="dtUsuarios" paginator="true" var="usuario" 
+                                 value="#{beanMantenimientoUsuario.listadoUsuarios}"
+                                 reflow="true" styleClass="usuario-table text-center"
+                                 rows="4" paginatorPosition="both"
+                                 style="width: 100%; height: 50%; text-align: center;"
+                                 filteredValue="#{beanMantenimientoUsuario.filtradoListaUsuarios}" emptyMessage="Sin coincidencias">
+
+                        <f:facet name="header">
+                            <div class="usuario-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Cédula" filterStyle="display: none;" filterBy="#{usuario.cedula}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{usuario.cedula}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{usuario.nombre}" style="text-align: center;">
+                            <h:outputText value="#{usuario.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Primer Apellido" style="text-align: center;">
+                            <h:outputText value="#{usuario.primerApellido}"/>
+                        </p:column>
+
+                        <p:column headerText="Segundo Apellido" style="text-align">
+                            <h:outputText value="#{usuario.segundoApellido}"/>
+                        </p:column>
+
+                        <p:column headerText="Teléfono" style="text-align: center;">
+                            <h:outputText value="#{usuario.telefono}"/>
+                        </p:column>
+
+                        <p:column headerText="Correo Electrónico" style="text-align: center; width: 250px;">
+                            <h:outputText value="#{usuario.email}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{usuario.estado}"/>
+                        </p:column>
+
+                        <p:column headerText="Rol" style="text-align: center;">
+                            <h:outputText value="#{usuario.tipoRol}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+
+                <h:form id="formAgregar">
+                    <p:dialog id="dlgAgregar" header="Registrar Usuario" widgetVar="dialogoAgregar" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto; width: 900px; height: 500px;">     
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel class="d-block" value="Nombre"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputText value="#{beanMantenimientoUsuario.usuario.nombre}" id="inputNombre" required="true"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel class="d-block" value="Primer Apellido"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputText value="#{beanMantenimientoUsuario.usuario.primerApellido}" id="inputPrimerApellido" required="true"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel class="d-block" value="Segundo Apellido"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputText value="#{beanMantenimientoUsuario.usuario.segundoApellido}" id="inputSegundoApellido" required="true"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel value="Cédula"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputText value="#{beanMantenimientoUsuario.usuario.cedula}" id="inputCedula" required="true"
+                                                 validator="#{beanMantenimientoUsuario.validarIdentificacion}"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel value="Teléfono"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputMask  value="#{beanMantenimientoUsuario.usuario.telefono}" style="width: 100%;" id="inputTel" 
+                                                  required="true" mask="9999-9999"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel value="Correo electrónico"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:inputText value="#{beanMantenimientoUsuario.usuario.email}" id="inputEmail" required="true"
+                                                 validator="#{beanMantenimientoUsuario.validarCorreo}"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+                                <p:outputLabel value="Contraseña"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:password value="#{beanMantenimientoUsuario.usuario.clave}" id="toggle" required="true" toggleMask="true" redisplay="true" style="width: 100%;"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2">
+
+                                <p:outputLabel value="Confirmar contraseña"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:password value="#{beanMantenimientoUsuario.usuario.confirmarClave}" id="toggle1" required="true" toggleMask="true" redisplay="true" style="width: 100%;"/>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12 p-2 mx-auto">
+                                <p:outputLabel value="Rol"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:selectOneMenu value="#{beanMantenimientoUsuario.cod_rol}" id="comboRol" required="true">
+                                        <f:selectItems value="#{beanMantenimientoUsuario.listadoRoles}"></f:selectItems>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 p-2 mx-auto">
+                                <p:outputLabel value="Estado"/>
+
+                                <div class="d-flex flex-column">
+                                    <p:selectOneMenu value="#{beanMantenimientoUsuario.cod_estado}" id="comboEstado" required="true">
+                                        <f:selectItems value="#{beanMantenimientoUsuario.listadoEstadoUsuarios}"></f:selectItems>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mx-auto text-center d-flex">
+                                <p:commandButton  value="Guardar" ajax="false"
+                                                  actionListener="#{beanMantenimientoUsuario.guardarUsuario}"
+                                                  process="@this" style="margin-right: 10px;"/>
+                                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+                            </div>
+                        </p:panel>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

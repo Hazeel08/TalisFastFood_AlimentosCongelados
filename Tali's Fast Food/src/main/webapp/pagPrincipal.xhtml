@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>TALI'S</title>
+        <link rel="shortcut icon" href="imagenes/iconoHead.png" type="image/gif"/>
+        <link rel="stylesheet" href="css/styleGeneral.css"/>
+        <link rel="stylesheet" href="css/stylePagPrincipal.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+            />
+    </h:head>
+    <h:body id="cuerpo">
+        <h:form>
+            <div id="nav">
+                <nav class="navbar navbar-expand-sm p-1">
+                    <a class="navbar-brand mb-0" href="#"><img class="d-line-block align-top" src="imagenes/logoCortado.jfif" style="width:20%;" alt="Logo"></img></a>
+                    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link enlaceNav" href="#sobreNosotros">Sobre Nosotros</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a class="nav-link enlaceNav" href="ayuda.xhtml">Contáctenos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link enlaceNavv" href="inicioSesion.xhtml">Inicio Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div id="header">
+                <div id="headerIMG">
+                    <h4 class="letrasHCalidad">100% CALIDAD</h4>
+                    <h3 class="letrasHD">LO MEJOR EN COMIDAS PREPARADAS</h3>
+
+                    <div id="btnRegistro">
+                        <h:commandButton class="registro" value="Registrarse" action="autoRegistro.xhtml"></h:commandButton>
+                    </div>
+
+                    <br></br>
+                </div>
+            </div>
+
+            <div id="sobreNosotros">
+                <h4 style="font-weight: bold;">Sobre Nosotros</h4>
+                <h:outputLabel style="text-align: justify;">Somos la mejor tienda en línea del país con una amplía variedad de alimentos preparados al mejor precio del mercado.  Contamos con horarios flexibles y distintas formas de envío alrededor del país para que no pierdas la oportunidad de disfrutar de nuestros deliciosos platillos.</h:outputLabel>
+            </div>
+
+            <!-- Sección de cómo comprar -->
+            <h5 class="mx-auto mt-6">
+                <h4 class="text-center" style="font-weight: bold;">¿Cómo comprar?</h4>
+                <h:panelGroup layout="block" class="d-flex justify-content-around">
+                    <h5 class="text-center">
+                        <svg class="icon icon-tabler icon-tabler-shopping-cart" width="100" height="100" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <circle cx="6" cy="19" r="2" />
+                            <circle cx="17" cy="19" r="2" />
+                            <path d="M17 17h-11v-14h-2" />
+                            <path d="M6 5l14 1l-1 7h-13" />
+                        </svg>
+                        <p class="text-center">
+                            Seleccione los productos que desea consumir de nuestro amplio menú.
+                        </p>
+                    </h5>
+
+                    <h5 class="text-center">
+                        <svg class="icon icon-tabler icon-tabler-box" width="100" height="100" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3" />
+                            <line x1="12" y1="12" x2="20" y2="7.5" />
+                            <line x1="12" y1="12" x2="12" y2="21" />
+                            <line x1="12" y1="12" x2="4" y2="7.5" />
+                        </svg>
+                        <p class="text-center">
+                            Entregamos la órden en el momento que desee.
+                        </p>
+                    </h5>
+
+                    <h5 class="text-center">
+                        <svg  class="icon icon-tabler icon-tabler-building-store" width="100" height="100" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <line x1="3" y1="21" x2="21" y2="21" />
+                            <path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                            <line x1="5" y1="21" x2="5" y2="10.85" />
+                            <line x1="19" y1="21" x2="19" y2="10.85" />
+                            <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                        </svg>
+                        <p class="text-center"> 
+                            Le garantizamos calidad de productos y ahorro de tiempo en la cocina.
+                        </p>
+                    </h5>
+                </h:panelGroup>
+            </h5>
+
+        </h:form>
+    </h:body>
+    <div id="footer">
+        <footer class="bg-dark text-center text-white">
+            <div class="RedesSociales">
+                <!-- Grid container -->
+                <div class="container p-4 pb-0">
+                    <!-- Section: Social media -->
+                    <section class="mb-6">
+                        <!-- Email -->
+                        <a
+                            class="btn btn-outline-light btn-floating m-1"
+                            id="icono"
+                            target="_blank"
+                            href="mailto:talisfood22@gmail.com"
+                            role="button"
+                            ><i class="fab bi-envelope"></i></a>
+
+                        <!-- Whatsapp-->
+                        <a
+                            class="btn btn-outline-light btn-floating m-1"
+                            id="icono"
+                            target="_blank"
+                            href="https://wa.me/50662376682"
+                            role="button"
+                            ><i class="fab bi-whatsapp"></i
+                            ></a>
+                    </section>
+                    <!-- Section: Social media -->
+                </div>
+                <!-- Grid container -->
+            </div>
+
+            <!-- Copyright -->
+            <div
+                class="derechos text-center p-3"
+                style="background-color: rgba(0, 0, 0, 0.2)"
+                >
+                <a>&copy; Derechos Reservados 2022 TALI'S</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+    </div>
+</html>
+

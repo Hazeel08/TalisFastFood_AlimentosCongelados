@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Registro</title>
+        <link rel="shortcut icon" href="imagenes/iconoHead.png" type="image/gif"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        <style type="text/css">
+            button.ui-button {
+                margin-right: .5rem;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="font-family: 'DM Sans', sans-serif; background-color: #F5D0A9">
+
+        <h:form class="w-75 mx-auto mt-2">
+
+            <div class="d-flex justify-content-center text-center align-items-center my-4 w-50 mx-auto">
+                <p:button value="Inicio" outcome="pagPrincipal" icon="pi pi-home" styleClass="rounded-button ui-button-outlined" style="color: black;"></p:button>
+                <p:button value="Ayuda" outcome="ayuda" icon="pi pi-heart" styleClass="rounded-button ui-button-outlined" style="color: black;"></p:button>
+            </div>
+
+            <div class="border border-dark" style="background-color: #FBFBFB;">
+
+                <h3 class="m-0 p-2 text-center" style="background-color: #FAAC58;">Datos Personales</h3>
+
+                <div class="row g-4 mx-auto p-2" style="background-color: #FBFBFB;">
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel class="d-block" value="Nombre"/>
+
+                        <div class="d-flex flex-row">
+                            <p:inputText value="#{beanDatosCuenta.usuario.nombre}" style="width: 100%;" id="inputNombre" required="true" requiredMessage="El nombre es requerido." />
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputNombre" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel class="d-block" value="Primer Apellido"/>
+
+                        <div class="d-flex flex-row">
+                            <p:inputText value="#{beanDatosCuenta.usuario.primerApellido}" style="width: 100%;" id="inputPrimerApellido" required="true" requiredMessage="El primer apellido es requerido." />
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputPrimerApellido" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel class="d-block" value="Segundo Apellido"/>
+
+                        <div class="d-flex flex-row">
+                            <p:inputText value="#{beanDatosCuenta.usuario.segundoApellido}" style="width: 100%;" id="inputSegundoApellido" required="true" requiredMessage="El segundo apellido es requerido." />
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputSegundoApellido" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel value="Cédula"/>
+
+                        <div class="d-flex flex-row">
+                            <p:inputText value="#{beanDatosCuenta.usuario.cedula}" style="width: 100%;" id="inputCedula" 
+                                         required="true" requiredMessage="La cédula es requerida" 
+                                         validator="#{beanDatosCuenta.validarIdentificacion}">
+                            </p:inputText>
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputCedula" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel value="Teléfono"/>
+
+                        <div class="d-flex flex-row"> 
+                            <p:inputMask  value="#{beanDatosCuenta.usuario.telefono}" style="width: 100%;" id="inputTel" 
+                                          required="true" requiredMessage="El teléfono es requerido." 
+                                          mask="9999-9999"/>
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputTel" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6 p-2">
+
+                        <p:outputLabel value="Email"/>
+
+                        <div class="d-flex flex-row">
+                            <p:inputText value="#{beanDatosCuenta.usuario.email}" style="width: 100%;" 
+                                         id="inputEmail" a:placeholder="ejemplo01@gmail.com"
+                                         required="true" requiredMessage="El email es requerido." 
+                                         validator="#{beanDatosCuenta.validarCorreo}"/>
+                            <p:outputLabel class="text-danger d-block my-auto mx-1" value="*"/>
+                        </div>
+
+                        <p:message for="inputEmail" style="width: 100%;"/>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <p:outputLabel value="Contraseña"/>
+
+                        <div class="d-flex flex-column">
+                            <p:password value="#{beanDatosCuenta.usuario.clave}" id="toggle" 
+                                        required="true" requiredMessage="La contraseña es requerida." 
+                                        toggleMask="true" redisplay="true" style="width: 100%;"/>   
+
+                            <p:message for="toggle" style="width: 100%;"/>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <p:outputLabel value="Confirmar contraseña"/>
+
+                        <div class="d-flex flex-column">
+                            <p:password value="#{beanDatosCuenta.usuario.confirmarClave}" 
+                                        id="toggle1" required="true" requiredMessage="La contraseña es requerida." 
+                                        toggleMask="true" redisplay="true" style="width: 100%;"/>
+                            <p:message for="toggle1" style="width: 100%;"/>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <h:outputLabel value="La contraseña debe tener mínimo 9 caracteres, entre minúsculas, 
+                                       mayúsculas y un caractater especial, por ejemplo: (*, @, ?, /, \, #, $)"
+                                       style="font-size: 15px; color: red; font-weight: bold; text-justify: center"></h:outputLabel>
+                    </div>
+                </div>
+
+                <div class="col-md-12 p-2 text-center">
+                    <p:commandButton action="#{beanDatosCuenta.guardarUsuario()}" ajax="false" validateClient="true"
+                                     class="boton" value="Continuar Registro" update="mensaje"
+                                     style="width: 25%; background-color: #2ECCFA;
+                                     border-radius: 5px; border-color: #04B4AE;
+                                     font-weight: bold; color: black;"></p:commandButton>
+                </div>
+            </div>    
+        </h:form>
+
+        <script src="js/evitaPost.js"></script>
+    </h:body>
+
+</html>

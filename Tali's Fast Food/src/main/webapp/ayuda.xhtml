@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ayuda</title>
+        <link rel="shortcut icon" href="imagenes/iconoHead.png" type="image/gif"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+    </h:head>
+    <h:body style="font-family: 'DM Sans', sans-serif; background-color: #F5D0A9;">
+        <h:form class="w-50 mx-auto mt-2">
+            <div class="d-flex justify-content-center text-center mt-4 w-50 mx-auto">
+                <p:button outcome="pagPrincipal" value="Inicio" icon="pi pi-home" styleClass="rounded-button ui-button-outlined mx-1" style="color: black;"></p:button>
+            </div>
+
+            <div class="border border-dark mt-4" style="background-color: #FBFBFB;">
+
+                <h3 class="m-0 p-2 text-center" style="background-color: #FAAC58;">Información de Ayuda</h3>
+
+                <div class="row g-4 mx-auto p-2" style="background-color: #FBFBFB;">
+
+                    <div class="col-md-12 p-2">
+                        <p:outputLabel class="d-block" value="Email"/>
+                        <p:inputText value="#{beanAyuda.email}" style="width: 100%" id="inputEmail" required="true" requiredMessage="El email es requerido."/>
+                        <p:message for="inputEmail" style="width: 100%;"/>
+                    </div>
+
+                    <div class="col-md-12 p-2">
+                        <p:outputLabel class="d-block" value="Mensaje"/>
+                        <p:inputTextarea value="#{beanAyuda.mensaje}" id="inputMensaje" rows="10" style="width: 100%;" required="true" requiredMessage="El mensaje es requerido."/>                       
+                        <p:message for="inputMensaje" style="width: 100%;"/>
+                    </div>
+                </div>
+
+                <center>
+                    <h:outputLabel value="#{beanAyuda.mensajeResultado}" style="color: red;"></h:outputLabel>
+                </center>
+
+                <div class="row g-4 mx-auto p-2" style="background-color: #FBFBFB;">
+                    <div class="col-md-12 p-2 text-center">
+                        <h:commandButton actionListener="#{beanAyuda.enviarCorreoConsulta()}" value="Enviar" style="width: 25%; background-color: #2ECCFA; border-radius: 5px; border-color: #04B4AE; font-weight: bold;"></h:commandButton>
+                        <h:commandButton actionListener="#{beanAyuda.limpiar()}" value="Cancelar" style="margin: 0 10px; width: 25%; background-color: #2ECCFA; border-radius: 5px; border-color: #04B4AE; font-weight: bold;"></h:commandButton>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>

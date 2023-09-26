@@ -1,0 +1,331 @@
+Create database TALIS
+
+Alter session set current_schema = TALIS;
+
+-- Creación de tablas para la dirección del cliente
+-- Primefaces , formularios, tablas, mensajes.
+-- JASPER, Jaspersoft (complicado)
+-- JSP
+Create Table INST_PROVINCIA (
+	COD_PROVINCIA number(2) not null,
+	DSC_CORTA_PROVINCIA varchar2(15),
+	DSC_PROVINCIA varchar2(255),
+	LOG_ACTIVO number(1),	
+);
+
+Create Table INST_CANTON (
+	COD_PROVINCIA number(2) not null,
+	COD_CANTON number(2) not null,
+	DSC_CANTON varchar2(255),
+	LOG_ACTIVO number(1),
+);
+
+Create Table INST_DISTRITO (
+	COD_PROVINCIA number(2) not null,
+	COD_CANTON number(2) not null,
+	COD_DISTRITO number(2) not null,
+	DSC_DISTRITO varchar2(255),
+	LOG_ACTIVO number(1),
+);
+
+Create Table INST_BARRIO(
+	COD_PROVINCIA number(2) not null,
+	COD_CANTON number(2) not null,
+	COD_DISTRITO number(2) not null,
+	COD_BARRIO number(3) not null,
+	DSC_BARRIO varchar2(255),
+	LOG_ACTIVO number(1)
+);
+
+Create Table INST_DIRECCION(
+    COD_DIRECCION number(10)  not null,
+	COD_PROVINCIA number(2) not null,
+	COD_CANTON number(2)not null,
+	COD_DISTRITO number(2) not null,
+	COD_BARRIO number(3) not null,
+	DSC_DIRECCION varchar2(250),
+	DIR_PRINCIPAL number(1),
+	COD_USUARIO varchar2(20) not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence INST_DIRECCION_seq Start with 1 Increment by 1;
+
+Create or replace trigger INST_DIRECCION_seq_tr
+ Before insert on INST_DIRECCION For each row
+ When (new.COD_DIRECCION Is null)
+Begin
+ select INST_DIRECCION_seq.NEXTVAL INTO :NEW.COD_DIRECCION From dual;
+end;
+/
+
+Create Table USUARIO(
+	COD_USUARIO varchar2(20) not null,
+	NOMBRE varchar2(250) not null,
+	PRIMER_APELLIDO varchar2(250) not null,
+	SEGUNDO_APELLIDO varchar2(250) not null,
+	TELEFONO varchar2(10) not null,
+	EMAIL varchar2(30) not null,
+	CLAVE varchar2(12) not null,
+	COD_ESTADO number(10) not null, -- SQLINES DEMO * NTE, 2- ACTIVA, 3- RECHAZADA
+	COD_ROL number(10) not null
+);
+
+Create Table HORARIO_ENTREGA(
+	COD_HORARIO number(10)  not null,
+	FECHA timestamp(3),
+	COD_USUARIO varchar2(20) not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence HORARIO_ENTREGA_seq Start with 1 Increment by 1;
+
+Create or replace trigger HORARIO_ENTREGA_seq_tr
+ Before insert on HORARIO_ENTREGA For each row
+ When (new.COD_HORARIO Is null)
+Begin
+ select HORARIO_ENTREGA_seq.NEXTVAL INTO :NEW.COD_HORARIO From dual;
+end;
+/
+
+Create Table ESTADO_USUARIO(
+	COD_ESTADO number(10) ,
+	LOG_ACTIVO number(10)
+);
+
+-- Generate ID using sequence and trigger
+Create sequence ESTADO_USUARIO_seq Start with 1 Increment by 1;
+
+Create or replace trigger ESTADO_USUARIO_seq_tr
+ Before insert on ESTADO_USUARIO For each row
+ When (new.COD_ESTADO Is null)
+Begin
+ select ESTADO_USUARIO_seq.NEXTVAL INTO :NEW.COD_ESTADO From dual;
+end;
+/
+
+Create Table ROL(
+	COD_ROL number(10)  not null,
+	TIPO_ROL varchar2(20) not null -- SQLINES DEMO * despachador
+);
+
+-- Generate ID using sequence and trigger
+Create sequence ROL_seq Start with 1 Increment by 1;
+
+Create or replace trigger ROL_seq_tr
+ Before insert on ROL For each row
+ When (new.COD_ROL Is null)
+Begin
+ select ROL_seq.NEXTVAL INTO :NEW.COD_ROL From dual;
+end;
+/
+
+Create Table PRODUCTO(
+	COD_PRODUCTO number(10) ,
+	FOTOGRAFIA varchar2(500) not null,
+	NOMBRE varchar2(50) not null,
+	DSC_PRODUCTO varchar2(250),
+	CANTIDAD_MINIMA number(10) not null,
+	CANTIDAD_EXISTENCIA number(10) not null,
+	LOG_ACTIVO number(10) not null,
+	PRECIO binary_double not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence PRODUCTO_seq Start with 1 Increment by 1;
+
+Create or replace trigger PRODUCTO_seq_tr
+ Before insert on PRODUCTO For each row
+ When (new.COD_PRODUCTO Is null)
+Begin
+ select PRODUCTO_seq.NEXTVAL INTO :NEW.COD_PRODUCTO From dual;
+end;
+/
+
+Create Table ORDEN(
+	COD_ORDEN number(10)  not null,
+	COD_USUARIO varchar2(20) not null,
+	COD_DIRECCION number(10) not null,
+	COD_HORARIO number(10) not null,
+	LOG_ACTIVO number(10) not null, -- SQLINES DEMO * nte, 2- Realizado, 3- Finalizado
+	FECHA_PEDIDO timestamp(3), -- SQLINES DEMO * sistema
+);
+
+-- Generate ID using sequence and trigger
+Create sequence ORDEN_seq Start with 1 Increment by 1;
+
+Create or replace trigger ORDEN_seq_tr
+ Before insert on ORDEN For each row
+ When (new.COD_ORDEN Is null)
+Begin
+ select ORDEN_seq.NEXTVAL INTO :NEW.COD_ORDEN From dual;
+end;
+/
+
+Create Table DETALLE_ORDEN(
+	COD_DETALLE number(10)  not null,
+	COD_ORDEN number(10) not null,
+	COD_PRODUCTO number(10) not null,
+	CANTIDAD number(10),
+	MONTO_UNIDAD binary_double,
+	LOG_ACTIVO number(10)
+);
+
+-- Generate ID using sequence and trigger
+Create sequence DETALLE_ORDEN_seq Start with 1 Increment by 1;
+
+Create or replace trigger DETALLE_ORDEN_seq_tr
+ Before insert on DETALLE_ORDEN For each row
+ When (new.COD_DETALLE Is null)
+Begin
+ select DETALLE_ORDEN_seq.NEXTVAL INTO :NEW.COD_DETALLE From dual;
+end;
+/
+
+Create Table ESTADO_ORDEN(
+	LOG_ACTIVO number(10) not null,
+	DSC_ESTADO varchar2(20) not null
+);
+
+Create Table FACTURA(
+	COD_FACTURA number(10)  not null,
+	SUBTOTAL binary_double not null,
+	POS_DESCUENTO binary_double,
+	IVA binary_double not null,
+	TOTAL binary_double not null,
+	TIPO_PAGO varchar2(20) not null,
+	FECHA timestamp(3) not null, -- SQLINES DEMO * sistema
+	COD_ORDEN number(10) not null,
+	COD_DETALLE_FACTURA number(10) not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence FACTURA_seq Start with 1 Increment by 1;
+
+Create or replace trigger FACTURA_seq_tr
+ Before insert on FACTURA For each row
+ When (new.COD_FACTURA Is null)
+Begin
+ select FACTURA_seq.NEXTVAL INTO :NEW.COD_FACTURA From dual;
+end;
+/
+
+Create Table DETALLE_FACTURA(
+    COD_DETALLE_FACTURA number(10)  not null,
+	IMPUESTO_CU binary_double not null,
+	MONTO_DESCUENTO binary_double not null,
+	TIPO_PAGO varchar2(50) not null,
+	TOTAL_FACTURA binary_double not null,
+	TOTAL_DESCUENTO binary_double not null,
+	TOTAL_IMPUESTO binary_double not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence DETALLE_FACTURA_seq Start with 1 Increment by 1;
+
+Create or replace trigger DETALLE_FACTURA_seq_tr
+ Before insert on DETALLE_FACTURA For each row
+ When (new.COD_DETALLE_FACTURA Is null)
+Begin
+ select DETALLE_FACTURA_seq.NEXTVAL INTO :NEW.COD_DETALLE_FACTURA From dual;
+end;
+/
+
+Create Table DESPACHO(
+	COD_DESPACHO number(10)  not null,
+	FECHA_ENVIO timestamp(3) not null,
+	HORA_ENVIO timestamp(3) not null,
+	OBSERVACION varchar2(300) null,
+	LOG_ACTIVO number(10) not null,
+	COSTO binary_double not null,
+	COD_ENTREGA number(10) not null,
+	COD_ORDEN number(10) not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence DESPACHO_seq Start with 1 Increment by 1;
+
+Create or replace trigger DESPACHO_seq_tr
+ Before insert on DESPACHO For each row
+ When (new.COD_DESPACHO Is null)
+Begin
+ select DESPACHO_seq.NEXTVAL INTO :NEW.COD_DESPACHO From dual;
+end;
+/
+
+Create Table TIPO_ENTREGA(
+	COD_ENTREGA number(10)  not null,
+	DSC_ENTREGA varchar2(30) not null
+);
+
+-- Generate ID using sequence and trigger
+Create sequence TIPO_ENTREGA_seq Start with 1 Increment by 1;
+
+Create or replace trigger TIPO_ENTREGA_seq_tr
+ Before insert on TIPO_ENTREGA For each row
+ When (new.COD_ENTREGA Is null)
+Begin
+ select TIPO_ENTREGA_seq.NEXTVAL INTO :NEW.COD_ENTREGA From dual;
+end;
+/
+
+
+-- Llaves primarias
+
+-- Dirección
+Alter table INST_PROVINCIA add constraint INST_PROVINCIA_PK primary key (COD_PROVINCIA);
+Alter Table INST_CANTON add Constraint INST_CANTON_PK primary key(COD_PROVINCIA, COD_CANTON);
+Alter Table INST_DISTRITO add Constraint INST_DISTRITO_PK primary key (COD_PROVINCIA, COD_CANTON, COD_DISTRITO);
+Alter table INST_BARRIO add constraint INST_BARRIO_PK primary key(COD_PROVINCIA, COD_CANTON, COD_DISTRITO, COD_BARRIO);
+Alter table INST_DIRECCION add constraint INST_DIRECCION_PK primary key(COD_DIRECCION);
+
+-- Autoregistro
+Alter Table USUARIO add constraint USUARIO_PK primary key(COD_USUARIO);
+Alter Table HORARIO_ENTREGA add constraint HORARIO_ENTREGA_PK primary key(COD_HORARIO);
+Alter Table ESTADO_USUARIO add constraint ESTADO_CUENTA_PK primary key(COD_ESTADO);
+Alter table ROL add constraint ROL_PK primary key(COD_ROL);
+
+-- Producto
+Alter Table PRODUCTO add constraint PRODUCTO_PK primary key(COD_PRODUCTO);
+
+-- Órden
+Alter Table ORDEN add constraint ORDEN_PK primary key(COD_ORDEN);
+Alter Table DETALLE_ORDEN add constraint DETALLE_ORDEN_PK primary key(COD_DETALLE);
+Alter Table ESTADO_ORDEN add constraint ESTADO_ORDEN_PK primary key(LOG_ACTIVO);
+
+-- Factura
+Alter table FACTURA add constraint FACTURA_PK primary key(COD_FACTURA);
+Alter table TIPO_ENTREGA add constraint TIPO_ENTREGA_PK primary key(COD_ENTREGA);
+Alter table DETALLE_FACTURA add constraint DETALLE_FACTURA_PK primary key(COD_DETALLE_FACTURA);
+
+-- Despacho
+Alter Table DESPACHO add constraint DESPACHO_PK primary key(COD_DESPACHO);
+
+-- Llaves foráneas
+
+-- Direcciones
+Alter Table INST_CANTON add Constraint INST_CANTON_FK foreign key(COD_PROVINCIA) references INST_PROVINCIA(COD_PROVINCIA);
+Alter Table INST_DISTRITO add Constraint INST_DISTRITO_FK foreign key (COD_PROVINCIA, COD_CANTON) references INST_CANTON(COD_PROVINCIA, COD_CANTON);
+Alter table INST_BARRIO add constraint INST_BARRIO_FK foreign key(COD_PROVINCIA, COD_CANTON, COD_DISTRITO) references INST_DISTRITO(COD_PROVINCIA, COD_CANTON, COD_DISTRITO);
+Alter table INST_DIRECCION add constraint INST_DIRECCION_FK foreign key(COD_PROVINCIA, COD_CANTON, COD_DISTRITO, COD_BARRIO) references INST_BARRIO(COD_PROVINCIA, COD_CANTON, COD_DISTRITO, COD_BARRIO);
+Alter table INST_DIRECCION add constraint INST_DIRECCION_USUARIO_FK foreign key(COD_USUARIO) references USUARIO(COD_USUARIO);
+
+-- Autoregistro
+Alter Table HORARIO_ENTREGA add constraint HORARIO_ENTREGA_FK foreign key(COD_USUARIO) references USUARIO(COD_USUARIO);
+Alter Table USUARIO add constraint ESTADO_USUARIO_FK foreign key(COD_ESTADO) references ESTADO_USUARIO(COD_ESTADO);
+Alter Table USUARIO add constraint USUARIO_ROL_FK foreign key(COD_ROL) references ROL(COD_ROL);
+
+-- Orden
+Alter Table ORDEN add constraint ORDEN_USUARIO_FK foreign key(COD_USUARIO) references USUARIO(COD_USUARIO);
+Alter Table ORDEN add constraint ORDEN_DIRECCION_FK foreign key(COD_DIRECCION) references INST_DIRECCION(COD_DIRECCION);
+Alter Table ORDEN add constraint ORDEN_HORARIO_FK foreign key(COD_HORARIO) references HORARIO_ENTREGA(COD_HORARIO);
+Alter Table ORDEN add constraint ORDEN_ESTADO_FK foreign key(LOG_ACTIVO) references ESTADO_ORDEN(LOG_ACTIVO);
+Alter table DETALLE_ORDEN add constraint DETALLE_ORDEN_FK foreign key(COD_ORDEN) references ORDEN(COD_ORDEN);
+Alter Table DETALLE_ORDEN add constraint DETALLE_PRODUCTO_FK foreign key(COD_PRODUCTO) references PRODUCTO(COD_PRODUCTO);
+
+-- Factura
+Alter Table FACTURA add constraint FACTURA_FK foreign key(COD_ORDEN) references ORDEN(COD_ORDEN);
+Alter Table FACTURA add constraint DETALLE_FACTURA_FK foreign key(COD_DETALLE_FACTURA) references DETALLE_FACTURA(COD_DETALLE_FACTURA);
+
+-- Despacho
+Alter Table DESPACHO add constraint DESPACHO_ENTREGA_FK foreign key(COD_ENTREGA) references TIPO_ENTREGA(COD_ENTREGA);

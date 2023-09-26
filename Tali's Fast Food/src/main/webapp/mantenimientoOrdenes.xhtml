@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <style type="text/css">
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formListado">
+                    <p:dataTable id="tablaOrdenes" 
+                                 paginator="true" var="orden" widgetVar="dtOrdenes"
+                                 value="#{beanDespacho.listadoOrdenesPendientes}"
+                                 reflow="true" styleClass="products-table text-center"
+                                 rows="1" paginatorPosition="both" emptyMessage="Sin coincidencias">
+
+                        <f:facet name="header">
+                            <div class="products-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtOrdenes').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Código Orden" style="text-align: center;">
+                            <h:outputText value="#{orden.cod_orden}" />
+                        </p:column>
+
+                        <p:column headerText="Solicitante" style="text-align: center;">
+                            <h:outputText value="#{orden.usuario.nombre},
+                                          #{orden.usuario.primerApellido},
+                                          #{orden.usuario.segundoApellido}" />
+                        </p:column>
+
+                        <p:column headerText="Dirección" style="text-align: center;">
+                            <h:outputText value="#{orden.direccion.provincia.dsc_provincia},
+                                          #{orden.direccion.canton.dsc_canton}, #{orden.direccion.distrito.dsc_Distrito},
+                                          #{orden.direccion.barrio.dsc_barrio}, #{orden.direccion.otrasSennias}" />
+                        </p:column>
+
+                        <p:column headerText="Dia de entrega" style="text-align: center; width: 300px;">
+                            <h:outputText value="#{orden.horario.formatoFechaYHora}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{orden.log_activo}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha Pedido" style="text-align: center;">
+                            <h:outputText value="#{orden.formatoFechaYHora}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

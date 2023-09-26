@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <style type="text/css">
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formListado">
+
+                    <div align="left" style="margin: 10px 0;">
+                        <p:button value="Regresar" outcome="mantenProductos"
+                                  icon="pi pi-arrow-left"
+                                  style="background-color: #2ECCFA; border-radius: 5px;
+                                  border-color: #04B4AE; font-weight: bold; color: black;"></p:button>
+                    </div>
+
+                    <p:dataTable id="tablaProductos" paginator="true" widgetVar="dtProducts" var="producto" value="#{beanProducto.listaProductosInactivos}"
+                                 reflow="true" styleClass="products-table text-center" selection="#{beanProducto.producto}"
+                                 rowKey="#{producto.cod_producto}" rows="3" paginatorPosition="both"
+                                 filteredValue="#{beanProducto.filtradoListaProductos}" emptyMessage="Sin coincidencias">
+
+                        <f:facet name="header">
+                            <div class="products-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Código" filterStyle="display: none;" filterBy="#{producto.cod_producto}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{producto.cod_producto}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{producto.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Imagen" style="text-align: center;">
+                            <p:graphicImage library="demo" styleClass="product-image">
+                                <img style="width: 100px;" src="#{producto.url_fotografia}"></img>
+                            </p:graphicImage>
+                        </p:column>
+
+                        <p:column headerText="Descripción" style="text-align: justify; width: 300px;">
+                            <h:outputText value="#{producto.dsc_producto}" />
+                        </p:column>
+
+                        <p:column headerText="Precio" style="text-align: center;">
+                            <h:outputText value="#{producto.precio}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad" style="text-align: center;">
+                            <h:outputText value="#{producto.cantidad_minima}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{producto.log_activo == 1 ? 'Activo' : 'Inactivo'}" />
+                        </p:column>
+
+                        <p:column headerText="" style="text-align: center;">
+                            <p:commandButton styleClass="ui-button-success rounded-button" icon="pi pi-circle-on"
+                                             value="Activar"
+                                             oncomplete="PF('dialogoActivar').show();" update=":formActivar">
+                                <f:setPropertyActionListener target="#{beanProducto.producto}" value="#{producto}"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formActivar">
+                    <p:confirmDialog id="dlgActivar" widgetVar="dialogoActivar" 
+                                     showEffect="fade" hideEffect="clip" responsive="true"
+                                     width="300" message="¿Seguro que desea activar este producto?" header="Confirmar" severity="warn">
+                        <p:commandButton style="margin: 0 10px;" value="Aceptar" actionListener="#{beanProducto.activarProducto()}" 
+                                         update=":formListado:tablaProductos" process="@this"
+                                         oncomplete="PF('dialogoActivar').hide();"/>
+                        <p:commandButton value="Cancelar" onclick="PF('dialogoActivar').hide();"/>
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

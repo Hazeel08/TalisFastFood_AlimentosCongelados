@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+    <body>
+        <ui:composition template="./layout.xhtml">
+
+            <ui:define name="content">
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-body" style="height: 600px">
+                            <div class="chart-area">
+                                <h:form id="formListado">
+                                    <p:dataTable id="tablaProductos" paginator="true" widgetVar="dtProducts" var="producto" value="#{beanProducto.listaProductos}"
+                                                 reflow="true" styleClass="products-table text-center" selection="#{beanProducto.producto}"
+                                                 rowKey="#{producto.cod_producto}" rows="5" paginatorPosition="both"
+                                                 filteredValue="#{beanProducto.filtradoListaProductos}" emptyMessage="Sin coincidencias">
+
+                                        <f:facet name="header">
+                                            <div class="products-table-header" align="center">
+                                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                                    <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                                                </span>
+                                            </div>
+                                        </f:facet>
+
+                                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                                            <h:outputText value="#{producto.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Imagen" style="text-align: center;">
+                                            <p:graphicImage library="demo" styleClass="product-image">
+                                                <img style="width: 100px;" src="#{producto.url_fotografia}"></img>
+                                            </p:graphicImage>
+                                        </p:column>
+
+                                        <p:column headerText="Descripción" style="text-align: justify; width: 300px;">
+                                            <h:outputText value="#{producto.dsc_producto}" />
+                                        </p:column>
+
+                                        <p:column headerText="Precio" style="text-align: center;">
+                                            <h:outputText value="#{producto.precio}">
+                                                <f:convertNumber currencySymbol="₡" type="currency"/>
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Cantidad" style="text-align: center;">
+                                            <h:outputText value="#{producto.cantidad_minima}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

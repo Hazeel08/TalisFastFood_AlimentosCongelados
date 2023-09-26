@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <style type="text/css">
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+    <body>
+        <ui:composition template="./layoutDespacho.xhtml">
+
+            <ui:define name="content">
+                <h2 style="text-align: center;">Información de Despachos Realizados</h2>
+                <h:form id="formListado">
+                    <p:dataTable  id="tablaOrdenes" paginator="true" var="despachos" widgetVar="dtOrdenes" 
+                                  value="#{beanDespacho.obtenerDespachos}"
+                                  reflow="true" styleClass="orden-table text-center"
+                                  rows="4" paginatorPosition="both">
+
+                        <f:facet name="header">
+                            <div class="products-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtOrdenes').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Código Despacho" filterStyle="display: none;" filterBy="#{despachos.idDespacho}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{despachos.idDespacho}" />
+                        </p:column>
+
+                        <p:column headerText="Cliente" style="text-align: center;">
+                            <h:outputText value="#{despachos.orden.usuario.nombre}
+                                          #{despachos.orden.usuario.primerApellido}
+                                          #{despachos.orden.usuario.segundoApellido}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha de Envío" filterStyle="display: none;" filterBy="#{orden.detalleOrden.producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{despachos.fechaEnvio}" />
+                        </p:column>
+
+                        <p:column headerText="Hora de Envío" style="text-align: center;">
+                            <h:outputText value="#{despachos.horaEnvio}" />
+                        </p:column>
+
+                        <p:column headerText="Observación" style="text-align: center; width: 200px;">
+                            <h:outputText value="#{despachos.observacion}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{despachos.estado}" />
+                        </p:column>
+
+                        <p:column headerText="Costo de Envío" style="text-align: center;">
+                            <h:outputText value="#{despachos.costo}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo de Entrega" style="text-align: center;">
+                            <h:outputText value="#{despachos.tipoEntrega}" />
+                        </p:column>
+
+                        <p:column headerText="Código de Orden" style="text-align: center;">
+                            <h:outputText value="#{despachos.orden.cod_orden}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

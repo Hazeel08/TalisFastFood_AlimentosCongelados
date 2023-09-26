@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+    <body>
+        <ui:composition template="./layout.xhtml">
+            <ui:define name="content">
+                <div align="center" class="my-2">
+                    <h4>Tus Pedidos</h4>
+                </div>
+                <p:dataTable id="tablaPedidos" var="pedido" value="#{beanPedidoEfectuado.obtenerPedidos}"
+                             style="text-align: center;" emptyMessage="No tienes pedidos">
+
+
+                    <p:column headerText="" style="text-align: center;">
+                        <p:graphicImage>
+                            <img style="width: 100px;" src="#{pedido.producto.url_fotografia}"></img>
+                        </p:graphicImage>
+                    </p:column>
+
+                    <p:column headerText="Producto" style="text-align: center;">
+                        <h:outputText value="#{pedido.producto.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Cantidad" style="text-align: center;">
+                        <h:outputText value="x #{pedido.cantidad}" />
+                    </p:column>
+
+                    <p:column headerText="Total" style="text-align: center;">
+                        <h:outputText value="#{pedido.total}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha Pedido" style="text-align: center;">
+                        <h:outputText value="#{pedido.formatoFechaYHora}" />
+                    </p:column>
+
+                    <p:column headerText="Estado" style="text-align: center;">
+                        <h:outputText value="#{pedido.log_activo}" />
+                    </p:column>
+                </p:dataTable>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

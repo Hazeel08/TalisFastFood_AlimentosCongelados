@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <style type="text/css">
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+    <body>
+        <ui:composition template="./layoutDespacho.xhtml">
+
+            <ui:define name="content">
+                <h2 style="text-align: center;">Seleccione la orden que desea despachar</h2>
+                <h:form id="formListado">
+                    <p:dataTable  id="tablaOrdenes" paginator="true" var="orden" widgetVar="dtOrdenes" 
+                                  value="#{beanDespacho.listadoOrdenesPendientes}"
+                                  reflow="true" styleClass="orden-table text-center"
+                                  rows="1" paginatorPosition="both"
+                                  rowKey="#{orden.orden.cod_orden}" selection="#{beanDespacho.ordenSeleccionada}" selectionMode="single">
+
+                        <f:facet name="header">
+                            <div class="products-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtOrdenes').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:ajax event="rowSelect" update=":formAgregar" oncomplete="PF('dialogoAgregar').show()"/>
+
+                        <p:column headerText="Código Orden" filterStyle="display: none;" filterBy="#{orden.orden.cod_orden}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{orden.orden.cod_orden}" />
+                        </p:column>
+
+                        <p:column headerText="Producto" filterStyle="display: none;" filterBy="#{orden.detalleOrden.producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{orden.detalleOrden.producto.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Cliente" style="text-align: center;">
+                            <h:outputText value="#{orden.orden.usuario.nombre},
+                                          #{orden.orden.usuario.primerApellido},
+                                          #{orden.orden.usuario.segundoApellido}" />
+                        </p:column>
+
+                        <p:column headerText="Dirección" style="text-align: center; width: 200px;">
+                            <h:outputText value="#{orden.orden.direccion.provincia.dsc_provincia},
+                                          #{orden.orden.direccion.canton.dsc_canton}, #{orden.orden.direccion.distrito.dsc_Distrito},
+                                          #{orden.orden.direccion.barrio.dsc_barrio}, #{orden.orden.direccion.otrasSennias}" />
+                        </p:column>
+
+                        <p:column headerText="Dia de entrega" style="text-align: center;">
+                            <h:outputText value="#{orden.orden.horario.formatoFechaYHora}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{orden.orden.log_activo}" />
+                        </p:column>
+
+                        <p:column headerText="Fecha Pedido" style="text-align: center;">
+                            <h:outputText value="#{orden.orden.formatoFechaYHora}" />
+                        </p:column>
+
+                        <p:column headerText="Total" style="text-align: center;">
+                            <h:outputText value="₡ #{orden.factura.total}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formAgregar">
+                    <p:dialog id="dlgAgregar" header="Información para el despacho" widgetVar="dialogoAgregar" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto;">     
+
+                            <div class="field">
+                                <h:outputText value="Tipo de Entrega"></h:outputText>
+                                <p:selectOneMenu value="#{beanDespacho.tipo_envio}">
+                                    <f:selectItem itemValue="1" itemLabel="Envío Directo"></f:selectItem>
+                                    <f:selectItem itemValue="2" itemLabel="Sin Envío"></f:selectItem>
+                                    <f:selectItem itemValue="3" itemLabel="Retiro en sucursal"></f:selectItem>
+                                    <f:selectItem itemValue="4" itemLabel="Encomienda"></f:selectItem>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Costo"></h:outputText>
+                                <p:inputText value="#{beanDespacho.despachos.costo}"></p:inputText>
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Observaciones"></h:outputText>
+                                <p:inputTextarea value="#{beanDespacho.despachos.observacion}"></p:inputTextarea>
+                            </div>
+                        </p:panel>
+
+                        <div align="center" style="margin-top: 10px;">
+                            <p:commandButton  value="Guardar" ajax="false" 
+                                              actionListener="#{beanDespacho.guardarDespacho()}"
+                                              update=":formListado:tablaOrdenes" 
+                                              process="@this" style="margin-right: 10px;"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+                        </div>
+
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

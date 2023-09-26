@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <style type="text/css">
+        button.ui-button {
+            margin-right: .5rem;
+        }
+    </style>
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form class="w-75 mx-auto mt-2">
+
+                    <div class="border border-dark" style="background-color: #FBFBFB;">
+
+                        <div style="background-color: #FAAC58; padding-bottom: 3%;">
+                            <h2 class="m-0 p-2 text-center">Reportes</h2>
+                        </div>
+
+                        <div class="row g-4 mx-auto p-1 text-center" style="background-color: #FBFBFB;">
+                            <center>
+                                <p:outputLabel class="display-block" style="font-size: 20px; text-align: center;" value="Fecha:"/>
+                                <p:datePicker id="fecha" style="margin: 5px;"/>
+                                <br></br>
+                                <p:outputLabel class="display-block" style="font-size: 20px; text-align: center;" value="Buscar:"/>
+                                <p:selectOneMenu style="width: 30%; margin: 5px;" class="mx-2">
+                                    <f:selectItem itemLabel="Pedido Pendiente" itemValue="1"></f:selectItem>
+                                    <f:selectItem itemLabel="Pedido Finalizado" itemValue="2"></f:selectItem>
+                                    <f:selectItem itemLabel="Ventas a Crédito" itemValue="Crédito"></f:selectItem>
+                                    <f:selectItem itemLabel="Ventas de Contado" itemValue="Contado"></f:selectItem>
+                                </p:selectOneMenu>
+                                <br></br>
+                                <h:commandButton value="Filtrar" style="margin: 10px; width: 25%; background-color: #2ECCFA; border-radius: 5px; border-color: #04B4AE; font-weight: bold;"></h:commandButton>
+                            </center>
+
+                            <div class="card col-md-12 p-4 mt-3 text-center">
+                                <h3 class="m-0 p-2 text-center">Listado de Reportes</h3>
+                                <p:dataTable  id="tablaOrdenes" paginator="true" var="reportes" widgetVar="dtOrdenes" 
+                                              value="#{beanReportes.obtenerReportes}"
+                                              reflow="true" styleClass="orden-table text-center"
+                                              rows="4" paginatorPosition="both">
+
+                                    <p:column headerText="Número de Orden" style="text-align: center;">
+                                        <h:outputText value="#{reportes.orden.cod_orden}" />
+                                    </p:column>
+
+                                    <p:column headerText="Productos" style="text-align: center;">
+                                        <h:outputText value="#{reportes.producto.nombre}" />
+                                    </p:column>
+
+                                    <p:column headerText="Método de Pago" style="text-align: center;">
+                                        <h:outputText value="#{reportes.factura.descTipoPago}" />
+                                    </p:column>
+
+                                    <p:column headerText="Estado" style="text-align: center;">
+                                        <h:outputText value="#{reportes.orden.log_activo.cod_estado  == 1 ? 'Pendiente' : 'Finalizado'}" />
+                                    </p:column>
+
+                                    <p:column headerText="Fecha" style="text-align: center">
+                                        <h:outputText value="#{reportes.orden.formatoFechaYHora}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

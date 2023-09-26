@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+    <body>
+        <ui:composition template="./layout.xhtml">
+
+            <ui:define name="content">
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-body" style="height: 600px">
+                            <div class="chart-area">
+                                <h:form id="formListado">
+                                    <h3 class="text-center">Seleccione el producto deseado</h3>
+                                    <div align="right">
+                                        <p:badge value="#{beanDetalleOrden.contador}">
+                                            <p:commandButton icon="pi pi-shopping-cart"
+                                                             update=":formCarrito" oncomplete="PF('dialogoCarrito').show()"/>
+                                        </p:badge>
+                                    </div>
+                                    <p:dataTable id="tablaProductos" paginator="true" widgetVar="dtProducts" var="producto" value="#{beanProducto.listaProductos}"
+                                                 reflow="true" styleClass="products-table text-center" selection="#{beanDetalleOrden.productoSeleccionado}"
+                                                 rowKey="#{producto.cod_producto}" rows="1" paginatorPosition="both" selectionMode="single"
+                                                 filteredValue="#{beanProducto.filtradoListaProductos}" emptyMessage="Sin coincidencias">
+
+                                        <f:facet name="header">
+                                            <div class="products-table-header" align="center">
+                                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                                    <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                                                </span>
+                                            </div>
+                                        </f:facet>
+
+                                        <p:ajax event="rowSelect" update=":formAgregar" oncomplete="PF('dialogoAgregar').show()"/>
+
+                                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                                            <h:outputText value="#{producto.nombre}" />
+                                        </p:column>
+
+                                        <p:column headerText="Imagen" style="text-align: center;">
+                                            <p:graphicImage library="demo" styleClass="product-image">
+                                                <img style="width: 100px;" src="#{producto.url_fotografia}"></img>
+                                            </p:graphicImage>
+                                        </p:column>
+
+                                        <p:column headerText="Descripción" style="text-align: justify; width: 300px;">
+                                            <h:outputText value="#{producto.dsc_producto}" />
+                                        </p:column>
+
+                                        <p:column headerText="Precio" style="text-align: center;">
+                                            <h:outputText value="#{producto.precio}">
+                                                <f:convertNumber currencySymbol="₡" type="currency"/>
+                                            </h:outputText>
+                                        </p:column>
+
+                                        <p:column headerText="Cantidad" style="text-align: center;">
+                                            <h:outputText value="#{producto.cantidad_minima}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h:form id="formAgregar">
+                    <p:dialog id="dlgAgregar" header="Seleccione la cantidad" widgetVar="dialogoAgregar" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto;">     
+
+                            <div class="field">
+                                <p:graphicImage style="width: 50%;">
+                                    <img src="#{beanDetalleOrden.productoSeleccionado.url_fotografia}"></img>
+                                </p:graphicImage>
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Cantidad"></h:outputText>
+                                <p:spinner onkeypress="return false" id="cuantity" min="1" max="50" value="#{beanDetalleOrden.detalleOrden.cantidad}" />
+                            </div>
+                        </p:panel>
+
+                        <div align="center" style="margin-top: 10px;">
+                            <p:commandButton  value="Guardar" ajax="false" actionListener="#{beanDetalleOrden.guardarDetalleCompra()}"
+                                              update=":formListado:tablaProductos" 
+                                              process="@this" style="margin-right: 10px;"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+                        </div>
+
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formCarrito">
+                    <p:dialog id="dlgAgregar" header="Cesta" widgetVar="dialogoCarrito" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true" style="width: 80%;">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto;">
+
+                            <p:dataTable id="tablaCarrito" paginator="true" var="carrito" value="#{beanDetalleOrden.obtenerInformacionSeleccionada()}"
+                                         reflow="true" styleClass="products-table text-center"  rows="2" paginatorPosition="both">
+
+                                <p:column headerText="Imagen" style="text-align: center;">
+                                    <p:graphicImage>
+                                        <img style="width: 100px;" src="#{carrito.producto.url_fotografia}"></img>
+                                    </p:graphicImage>
+                                </p:column>
+
+                                <p:column headerText="Producto" style="text-align: center;">
+                                    <h:outputText value="#{carrito.producto.nombre}" />
+                                </p:column>
+
+                                <p:column headerText="Cantidad" style="text-align: center;">
+                                    <h:outputText value="#{carrito.cantidad}" />
+                                </p:column>
+
+                                <p:column headerText="Precio" style="text-align: center;">
+                                    <h:outputText value="#{carrito.monto_unidad}">
+                                        <f:convertNumber currencySymbol="₡" type="currency"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="Acciones" style="text-align: center;">
+                                    <p:commandButton actionListener="#{beanDetalleOrden.eliminarDetalleCompra(carrito)}" ajax="false" update=":formCarrito:tablaCarrito"
+                                                     styleClass="ui-button-danger rounded-button" icon="pi pi-trash"></p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel> 
+                        <div align="center" style="margin-top: 10px;">
+                            <p:commandButton  value="Finalizar Compra" ajax="false"
+                                              action="#{beanDetalleOrden.redirigirAFacturacion()}"
+                                              process="@this" style="margin-right: 10px;"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoCarrito').hide();"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

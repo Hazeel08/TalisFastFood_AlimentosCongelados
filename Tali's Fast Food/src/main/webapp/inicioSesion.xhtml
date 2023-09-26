@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Inicio de Sesión</title>
+        <link rel="shortcut icon" href="imagenes/iconoHead.png" type="image/gif"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+            />
+    </h:head>
+    <f:metadata> <f:event type="preRenderView" listener="#{beanInicioSesion.paginaEnCarga}"/>
+    </f:metadata>
+    <h:body id="cuerpo" style="font-family: 'DM Sans', sans-serif; background-color: #F5D0A9;">
+        <div class="d-flex justify-content-end pt-3 pe-3 mx-2">
+            <p:button outcome="pagPrincipal" value="Inicio" icon="pi pi-home" styleClass="rounded-button ui-button-outlined mx-1" style="color: black;"></p:button>
+            <p:button outcome="autoRegistro" class="botonesMenu" icon="pi pi-user" styleClass="rounded-button ui-button-outlined mx-1" style="color: black;" value="Registrarse"/>
+            <p:button outcome="ayuda" class="botonesMenu" icon="pi pi-heart" styleClass="rounded-button ui-button-outlined" style="color: black;" value="Ayuda"/>
+        </div>
+
+        <h:form class="m-0 vh-100 row justify-content-center align-items-center">
+
+            <div style="background-color: #FBFBFB; border: 1px solid black; border-radius: 5px;">
+                <h3 class="text-center" style="background-color: #FAAC58; border-bottom: 1px solid black; border-top-right-radius: 5px; border-top-left-radius: 5px; padding-top: 1%; padding-bottom: 1%;">Inicio de Sesión</h3>
+
+                <div class="col-auto p-2">
+
+                    <div class="text-center my-2">
+                        <img style="width: 25%;" src="imagenes/perfil.png" alt="Perfil"/>
+                    </div>
+
+                    <div class="col-md-12 p-2 text-center">
+                        <i class="fab bi-person-fill" style="font-size: 25px;"></i>
+                        <p:selectOneMenu value="#{beanInicioSesion.rol.cod_rol}"
+                                         id="rol" required="true" requiredMessage="Debe seleccionar el rol" 
+                                         style="width: 60%;">
+                            <f:selectItems value="#{beanInicioSesion.listadoRoles}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="rol" style="width: 70%;"></p:message>
+                    </div>
+
+                    <div class="col-md-12 p-2 text-center">
+                        <i class="fab bi-envelope-fill" style="font-size: 23px; margin-right: 2px;"></i>
+                        <p:inputText value="#{beanInicioSesion.inicioSesion.email}" 
+                                     required="true" requiredMessage="El email es requerido." id="email"
+                                     style="width: 60%;" a:placeholder="Correo Electrónico"/>
+                        <p:message for="email" style="width: 70%;"></p:message>
+                    </div>
+
+                    <div class="col-md-12 p-2 text-center">
+                        <i class="fab bi-lock-fill" style="font-size: 25px;"></i>
+                        <p:password id="toggle1" value="#{beanInicioSesion.inicioSesion.clave}" 
+                                    required="true" requiredMessage="La contraseña es requerida."
+                                    toggleMask="true" redisplay="true" style="width: 290px;" a:placeholder="Contraseña"/>
+                        <p:message for="toggle1" style="width: 70%;"></p:message>
+                    </div>
+
+                    <div class="my-2 text-center">
+                        <h:link outcome="cambioClave" style="font-weight: bold; color: gray;">¿Ha olvidado su contraseña?</h:link>
+                    </div>
+
+                    <div class="p-2 text-center">
+                        <p:commandButton value="Ingresar" 
+                                         ajax="false" validateClient="true"
+                                         action="#{beanInicioSesion.validarCredenciales()}"
+                                         class="btnForm mx-1 boton" 
+                                         style="width: 40%; background-color: #2ECCFA; border-radius:
+                                         5px; border-color: black; font-weight: bold; color: black;"></p:commandButton>
+                        <br></br>
+                        <p:button class="btnForm my-1 boton" outcome="pagPrincipal"
+                                  value="Cancelar" style="width: 40%; background-color: #2ECCFA; border-radius: 5px;
+                                  border-color: black; font-weight: bold; color: black;"></p:button>
+                    </div>
+                </div>
+            </div>   
+        </h:form>
+        <script src="js/evitaPost.js"></script>
+    </h:body>
+</html>

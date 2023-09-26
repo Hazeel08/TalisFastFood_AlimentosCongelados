@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+    <body>
+        <ui:composition template="./layout.xhtml">
+
+            <ui:define name="content">
+                <div class="col-xl-12 col-lg-12">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-body" style="height: 600px">
+                            <div class="chart-area">
+                                <h:form>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h2 style="text-align: center;">Detalle de Facturación</h2>
+                                            <div class="my-4">
+                                                <h4 class="mb-2">Dirección para la entrega</h4>
+                                                <p:dataTable var="orden" value="#{beanDetalleFacturacion.listaOrden}"
+                                                             style="width: 100%; height: 50%; text-align: center; font-size: 15px;" emptyMessage="Sin coincidencias">
+                                                    <p:column headerText="Provincia">
+                                                        <h:outputText value="#{orden.direccion.provincia.dsc_provincia}" class="mx-3 text-center"></h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="Cantón">
+                                                        <h:outputText value="#{orden.direccion.canton.dsc_canton}" class="text-center"></h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="Distrito">
+                                                        <h:outputText value="#{orden.direccion.distrito.dsc_Distrito}" class="text-center"></h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="Barrio">
+                                                        <h:outputText value="#{orden.direccion.barrio.dsc_barrio}" class="text-center"></h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="Otras señas">
+                                                        <h:outputText value="#{orden.direccion.otrasSennias}" class="text-center"></h:outputText>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                            <div class="mb-4 text-center">
+                                                <h4 class="mb-2">Fecha y hora de la entrega</h4>
+                                                <h:outputText value="#{beanDetalleFacturacion.orden.horario.formatoFechaYHora}"></h:outputText>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h2 style="text-align: center;">Tu Pedido</h2>
+                                            <div class="my-4">
+                                                <p:dataTable var="detalleOrden" value="#{beanDetalleFacturacion.listaDetalleOrden}"
+                                                             style="width: 100%; height: 50%; text-align: center;" emptyMessage="Sin coincidencias">
+                                                    <p:column headerText="">
+                                                        <div class="flex">
+                                                            <p:graphicImage>
+                                                                <img style="width: 50px;" src="#{detalleOrden.producto.url_fotografia}"></img>
+                                                            </p:graphicImage>
+                                                            <h:outputText value="#{detalleOrden.producto.nombre}" class="mx-3"></h:outputText>
+                                                        </div>
+                                                    </p:column>
+                                                    <p:column headerText="">
+                                                        <h:outputText value="x #{detalleOrden.cantidad}"></h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="">
+                                                        <h:outputText value="₡ #{detalleOrden.monto_unidad}"></h:outputText>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+
+                                            <div class="d-flex flex-row justify-content-between">
+                                                <div>
+                                                    <h:outputText value="Subtotal:"></h:outputText>
+                                                </div>
+                                                <div>
+                                                    <h:outputText value="#{beanDetalleFacturacion.subtotal}"></h:outputText>
+                                                </div>
+                                            </div>
+
+                                            <div class="my-4 d-flex flex-row justify-content-between">
+                                                <div>
+                                                    <h:outputText value="Descuento:"></h:outputText>
+                                                </div>
+                                                <div>
+                                                    <h:outputText value="0.0"></h:outputText>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <p:selectOneMenu value="#{beanDetalleFacturacion.tipo_pago}" style="width: 100%;">
+                                                    <f:selectItem itemValue="1" itemLabel="Contado"></f:selectItem>
+                                                    <f:selectItem itemValue="2" itemLabel="Crédito"></f:selectItem>
+                                                </p:selectOneMenu>
+                                            </div>
+
+                                            <div class="my-4 d-flex flex-row justify-content-between">
+                                                <div>
+                                                    <h:outputText value="Total:"></h:outputText>
+                                                </div>
+                                                <div class="d-flex flex-column text-end">
+                                                    <div>
+                                                        <h:outputText value="#{beanDetalleFacturacion.total}"></h:outputText>
+                                                    </div>
+                                                    <div>
+                                                        <h:outputText value="(incluye ₡ #{beanDetalleFacturacion.formatoIVA()} IVA)"></h:outputText>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div align="center">
+                                                <p:commandButton action="#{beanDetalleFacturacion.finalizarCompra}" ajax="false" value="Realizar el Pedido"></p:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

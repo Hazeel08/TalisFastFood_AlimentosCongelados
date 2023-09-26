@@ -1,0 +1,165 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 25-jun-2022, 0:57:01
+    Author     : hcald
+*/
+/*Página Principal*/
+/*Style Cuerpo*/
+
+*{
+    font-family: 'DM Sans', sans-serif;
+}
+
+#cuerpo{
+    background-color: #FBFBFB;
+}
+
+/*Style Nav*/
+#imgLogoNav{
+    width:30%;
+}
+
+#contenidoNav{
+    padding-top: 1%;
+}
+
+#nombreE {
+    color: #01DFD7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.enlaceNav, .enlaceNavv {
+    color: black;
+    font-size: 20px;
+}
+
+.enlaceNav {
+    border-right: 1px solid #F78935;
+}
+
+.enlaceNav:hover, .enlaceNavv:hover{
+    color: #F78935;
+}
+
+/*Style Header*/
+#header{
+    width: 100%;
+    background-image: url(../imagenes/platillosP.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 650px;
+    position: relative;
+}
+
+#headerIMG{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.letrasHCalidad, .letrasHD{
+    color: white;
+    font-weight: bold;
+}
+
+.letrasHCalidad{
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Tillana', cursive;
+    padding-top: 12%;
+}
+
+.letrasHD{
+    font-size: 40px;
+    font-family: 'Bowlby One', cursive;
+    font-family: 'DM Sans', sans-serif;
+    font-family: 'Tillana', cursive;
+    padding-top: 6%;
+}
+
+#btnRegistro{
+    padding-top: 6%;
+}
+
+.registro{
+    background-color: #EC7C26;
+    border-color: #EC7C26;
+    padding: 5px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.registro:hover{
+    background-color: #F78935;
+    border-color: #F78935;
+    color: white;
+    font-weight: bold;
+}
+
+/*Style Sobre Nosotros y Como comprar*/
+#sobreNosotros{
+    padding: 2% 10%;
+    font-size: 20px;
+    text-align: center;
+}
+
+h4{
+    color: #F78935;
+}
+
+/*Style footer*/
+#icono:hover {
+    background-color: grey;
+}
+
+i{
+    color: white;
+    font-weight: bold;
+}
+
+/*Menú Administrador*/
+#menuAdm{
+    width: 100%;
+    background-image: url(../imagenes/platillos.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+}
+
+#fondoMenu{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/*Botones de mantenimiento*/
+.botones{
+    color: black;
+}
+.botones:hover{
+    background-color: black;
+    color: white;
+    transition: .4s;
+    border-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+

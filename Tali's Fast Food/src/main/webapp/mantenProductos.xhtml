@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">   
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+            <ui:define name="content">
+                <h:form id="formListado">
+                    <p:separator/>
+                    <div align="center">
+                        <p:commandButton value="Agregar Producto" actionListener="#{beanProducto.limpiarProducto()}" 
+                                         oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"
+                                         icon="pi pi-bookmark" style="background-color: #2ECCFA; border-radius: 5px;
+                                         border-color: #04B4AE; font-weight: bold; color: black; margin: 0 10px;"/>
+                        <p:button value="Productos Inactivos"
+                                  outcome="manteproductosInactivos"
+                                  icon="pi pi-external-link"
+                                  style="background-color: #2ECCFA; border-radius: 5px;
+                                  border-color: #04B4AE; color: black; font-weight: bold;"></p:button>
+                    </div>
+                    <p:separator/>
+                    <p:dataTable id="tablaProductos" paginator="true" widgetVar="dtProducts" var="producto" value="#{beanProducto.listaProductos}"
+                                 reflow="true" styleClass="products-table text-center" selection="#{beanProducto.producto}"
+                                 rowKey="#{producto.cod_producto}" rows="3" paginatorPosition="both"
+                                 filteredValue="#{beanProducto.filtradoListaProductos}" emptyMessage="Sin coincidencias">
+
+                        <f:facet name="header">
+                            <div class="products-table-header" align="center">
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i> 
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+                                </span>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Código" filterStyle="display: none;" filterBy="#{producto.cod_producto}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{producto.cod_producto}" />
+                        </p:column>
+
+                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{producto.nombre}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{producto.nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Imagen" style="text-align: center;">
+                            <p:graphicImage library="demo" styleClass="product-image">
+                                <img style="width: 100px;" src="#{producto.url_fotografia}"></img>
+                            </p:graphicImage>
+                        </p:column>
+
+                        <p:column headerText="Descripción" style="text-align: justify; width: 300px;">
+                            <h:outputText value="#{producto.dsc_producto}" />
+                        </p:column>
+
+                        <p:column headerText="Precio" style="text-align: center;">
+                            <h:outputText value="#{producto.precio}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad" style="text-align: center;">
+                            <h:outputText value="#{producto.cantidad_existencia}" />
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{producto.log_activo == 1 ? 'Activo' : 'Inactivo'}" />
+                        </p:column>
+
+                        <p:column headerText="Editar" style="text-align: center;">
+                            <p:commandButton icon="pi pi-pencil" styleClass="edit-button rounded-button ui-button-success"
+                                             title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{beanProducto.producto}" value="#{producto}"/>
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column headerText="Eliminar" style="text-align: center;">
+                            <p:commandButton styleClass="ui-button-danger rounded-button" icon="pi pi-trash"
+                                             title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                                <f:setPropertyActionListener target="#{beanProducto.producto}" value="#{producto}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+
+                <h:form id="formAgregar">
+                    <p:dialog id="dlgAgregar" header="Agregar producto" widgetVar="dialogoAgregar" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto;">     
+
+                            <div class="field">
+                                <h:outputText value="URL Fotografía"></h:outputText>
+                                <p:inputText id="picture" value="#{beanProducto.producto.url_fotografia}"></p:inputText>
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Nombre"></h:outputText>
+                                <p:inputText id="name" value="#{beanProducto.producto.nombre}"></p:inputText>
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Descripción"></h:outputText>
+                                <p:inputTextarea id="desc" value="#{beanProducto.producto.dsc_producto}"></p:inputTextarea >
+                            </div>
+
+                            <div class="field">
+                                <h:outputText value="Estado"></h:outputText>
+                                <p:spinner onkeypress="return false" id="status" min="0" max="1" value="#{beanProducto.producto.log_activo}" />
+                                <div align="center">
+                                    <span style="color: red;">*Activo = 1, Inactivo = 0*</span> 
+                                </div>
+                            </div>
+
+                            <div class="formgrid grid">
+                                <div class="field col">
+                                    <p:outputLabel value="Precio"></p:outputLabel>
+                                    <p:inputNumber id="price" value="#{beanProducto.producto.precio}" symbol=" CRC"
+                                                   symbolPosition="s" required="true">
+                                    </p:inputNumber>
+                                </div>
+
+                                <div class="field col">
+                                    <p:outputLabel for="quantity">Cantidad</p:outputLabel>
+                                    <p:spinner id="quantity" min="1" max="50" value="#{beanProducto.producto.cantidad_existencia}">
+                                    </p:spinner>
+                                </div>
+                            </div>
+                        </p:panel>
+
+                        <div align="center">
+                            <p:commandButton  value="Guardar" ajax="false" actionListener="#{beanProducto.agregarProducto}" 
+                                              update=":formListado:tablaProductos" 
+                                              process="@this" style="margin-right: 10px;"/>
+                            <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formModificar">
+                    <p:dialog id="dlgModificar" header="Modificar Producto" widgetVar="dialogoModificar" 
+                              resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+                        <p:panel id="manage-product-content" class="ui-fluid" style="margin: 0 auto;">      
+
+                            <div class="field">
+                                <h:outputText value="URL Fotografía"></h:outputText>
+                                <p:inputText id="picture" value="#{beanProducto.producto.url_fotografia}"></p:inputText>
+                            </div>
+                            <p:message for="picture"></p:message>
+
+                            <div class="field">
+                                <h:outputText value="Nombre"></h:outputText>
+                                <p:inputText id="name" value="#{beanProducto.producto.nombre}"></p:inputText>
+                            </div>
+                            <p:message for="name"></p:message>
+
+                            <div class="field">
+                                <h:outputText value="Descripción"></h:outputText>
+                                <p:inputTextarea id="desc" value="#{beanProducto.producto.dsc_producto}"></p:inputTextarea >
+                            </div>
+                            <p:message for="desc"></p:message>
+
+                            <div class="field">
+                                <h:outputText value="Estado"></h:outputText>
+                                <p:spinner onkeypress="return false" id="status1" min="0" max="1" value="#{beanProducto.producto.log_activo}" />
+                                <div align="center">
+                                    <span style="color: red;">*Activo = 1, Inactivo = 0*</span> 
+                                </div>
+                            </div>
+
+                            <div styleClass="formgrid grid">
+                                <div styleClass="field col">
+                                    <p:outputLabel>Precio</p:outputLabel>
+                                    <p:inputNumber id="price" value="#{beanProducto.producto.precio}" symbol=" CRC"
+                                                   symbolPosition="s" />
+                                </div>
+                                <div class="field col">
+                                    <p:outputLabel>Cantidad</p:outputLabel>
+                                    <p:spinner id="quantity" min="1" max="50" value="#{beanProducto.producto.cantidad_existencia}" />
+                                </div>
+                            </div>
+                        </p:panel>
+                        <div align="center">
+                            <p:commandButton value="Guardar" actionListener="#{beanProducto.modificarProducto}" 
+                                             ajax="false" validateClient="true"
+                                             update=":formListado:tablaProductos"
+                                             process="@this"
+                                             style="margin-right: 10px;" />
+                            <p:commandButton value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formInfo">
+                    <p:confirmDialog id="dlgInfo" widgetVar="dialogoInfo" 
+                                     showEffect="fade" hideEffect="clip" responsive="true"
+                                     width="300" message="Producto guardado exitosamente" header="Información" severity="warn">
+                        <p:commandButton value="Aceptar" onclick="PF('dialogoInfo').hide();"/>
+                    </p:confirmDialog>
+                </h:form>
+
+                <h:form id="formEliminar">
+                    <p:confirmDialog id="dlgEliminar" widgetVar="dialogoEliminar" 
+                                     showEffect="fade" hideEffect="clip" responsive="true"
+                                     width="300" message="¿Seguro que desea eliminar este producto?" header="Confirmar" severity="warn">
+                        <p:commandButton style="margin: 0 10px;" value="Aceptar" actionListener="#{beanProducto.eliminarProducto}" update=":formListado:tablaProductos" 
+                                         oncomplete="PF('dialogoEliminar').hide();"/>
+                        <p:commandButton value="Cancelar" onclick="PF('dialogoEliminar').hide();"/>
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

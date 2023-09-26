@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Direcciones de entrega</title>
+        <link rel="shortcut icon" href="imagenes/iconoHead.png" type="image/gif"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+    </h:head>
+
+    <h:body style="font-family: 'DM Sans', sans-serif; background-color: #F5D0A9">
+
+        <h:form>
+            <div align="start" class="mt-2">
+                <p:commandButton value="Regresar" action="autoRegistro.xhtml" actionListener="#{beanDatosCuenta.limpiarCampos}" ajax="false" icon="pi pi-arrow-left" styleClass="rounded-button ui-button-outlined mx-1" style="color: black;"/>
+            </div>
+            <div class="d-flex justify-content-center text-center align-items-center my-4 w-50 mx-auto">
+                <p:button value="Inicio" outcome="pagPrincipal" icon="pi pi-home" styleClass="rounded-button ui-button-outlined mx-1" style="color: black;"/>
+                <p:button value="Ayuda" outcome="ayuda" icon="pi pi-heart" styleClass="rounded-button ui-button-outlined" style="color: black;"/>
+            </div>
+        </h:form>
+
+        <h:form id="formListado">
+            <p:separator/>
+            <div align="center">
+                <p:commandButton value="Agregar Dirección" 
+                                 oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"
+                                 icon="pi pi-bookmark" style="background-color: #2ECCFA; border-radius: 5px;
+                                 border-color: #04B4AE; font-weight: bold; color: black; margin: 0 10px;"/>
+                <p:commandButton value="Continuar Registro" 
+                                 action="#{beanProvincias.validacionListaVacia()}"
+                                 icon="pi pi-external-link"
+                                 style="background-color: #2ECCFA; border-radius: 5px;
+                                 border-color: #04B4AE; color: black; font-weight: bold;"/>
+            </div>
+            <p:separator/>
+            <p:dataTable id="tablaDirecciones" paginator="true" widgetVar="dtdirecciones" var="direccion" 
+                         value="#{beanDirecciones.listadoDescripciones}"
+                         reflow="true" styleClass="direccion-table text-center"
+                         rows="5" paginatorPosition="both"
+                         emptyMessage="No hay direcciones registradas">
+
+                <p:column headerText="Provincia" style="text-align: center;">
+                    <h:outputText value="#{direccion.provincia.dsc_provincia}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Cantón" style="text-align: center;">
+                    <h:outputText value="#{direccion.canton.dsc_canton}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Distrito" style="text-align: center;">
+                    <h:outputText value="#{direccion.distrito.dsc_Distrito}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Barrio" style="text-align: center;">
+                    <h:outputText value="#{direccion.barrio.dsc_barrio}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Dirección" style="text-align: center;">
+                    <h:outputText value="#{direccion.otrasSennias}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Principal" style="text-align: center;">
+                    <h:outputText value="#{direccion.esDireccionPrincipal ? 'Si' : 'No'}"></h:outputText>
+                </p:column>
+
+                <p:column style="text-align: center;">                            
+                    <p:commandButton value="Eliminar" 
+                                     oncomplete="PF('dialogoEliminar').show();" update=":formEliminar"
+                                     process="@this"
+                                     icon="pi pi-trash"
+                                     class="boton mx-1" 
+                                     style="background-color: #2ECCFA;
+                                     border-radius: 5px; border-color: #04B4AE;
+                                     font-weight: bold; color: black;">                                               
+                    </p:commandButton>                               
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+
+        <h:form id="formAgregar">
+            <p:dialog id="dlgAgregar" header="Agregar Direcciones" widgetVar="dialogoAgregar" 
+                      resizable="false" showEffect="fade" hideEffect="clip" modal="true" responsive="true">
+
+                <p:panel class="ui-fluid" style="margin: 0 auto;"> 
+
+                    <!-- Provincias -->
+                    <div class="field mb-2">
+                        <p:outputLabel value="Provincia"></p:outputLabel>
+                        <p:selectOneMenu label="pro" value="#{beanProvincias.cod_provincia}" id="pro">
+                            <f:selectItems value="#{beanProvincias.listaPro}"/>
+                            <p:ajax event="itemSelect" update="can" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <!-- Cantones -->
+                    <div class="field">
+                        <p:outputLabel value="Cantón"></p:outputLabel>
+                        <p:selectOneMenu label="can" value="#{beanProvincias.cod_canton}" id="can">
+                            <f:selectItems value="#{beanProvincias.listaCan}"/>
+                            <p:ajax  event="itemSelect" update="dis" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <!-- Distritos -->
+                    <div class="field my-2">
+                        <p:outputLabel class="d-block" value="Distrito"/>
+                        <p:selectOneMenu label="dis" value="#{beanProvincias.cod_distrito}" id="dis">
+                            <f:selectItems value="#{beanProvincias.listaDis}"/>
+                            <p:ajax event="itemSelect"  update="bar1" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <!-- Barrios -->
+                    <div class="field">
+                        <p:outputLabel class="d-block" value="Barrio"/>
+                        <p:selectOneMenu value="#{beanProvincias.cod_barrio}" id="bar1">
+                            <f:selectItems value="#{beanProvincias.listaBar}"/>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="field my-2">
+                        <p:outputLabel value="Otras señas"/>
+                        <p:inputText class="w-100" value="#{beanProvincias.otrasSennas}" />
+                    </div>
+
+                    <div class="field text-center">
+                        <p:selectBooleanCheckbox value="#{beanProvincias.esDireccionPrincipal}" itemLabel="¿Es esta su ubicación principal?" />
+                    </div>   
+
+                </p:panel>
+                <p:messages></p:messages>
+
+                <div align="center" style="margin: 10px 0;">
+                    <p:commandButton value="Agregar"
+                                     actionListener="#{beanProvincias.agregarDireccion()}"
+                                     ajax="false" validateClient="true" class="boton mx-1"  
+                                     style="margin: 0 10px;"
+                                     update=":formListado:tablaDirecciones" oncomplete="PF('dialogoAgregar').hide();"/>
+                    <p:commandButton value="Cancelar" onclick="PF('dialogoAgregar').hide()"/>
+                </div>
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:confirmDialog id="dlgEliminar" widgetVar="dialogoEliminar" 
+                             showEffect="fade" hideEffect="clip" responsive="true"
+                             width="300" message="¿Seguro que desea eliminar esta dirección?" header="Confirmar" severity="warn">
+                <p:commandButton style="margin: 0 10px;" value="Aceptar" actionListener="#{beanProvincias.eliminarDireccion()}" 
+                                 update=":formListado:tablaDirecciones" 
+                                 oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton value="Cancelar" onclick="PF('dialogoEliminar').hide();"/>
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+
+</html>

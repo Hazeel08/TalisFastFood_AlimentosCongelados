@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+
+    <body>
+        <ui:composition template="./layoutAdmin.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formListadoUsuarios">
+                    <div style="text-align: end;">
+                        <p:commandButton styleClass="ui-button-danger rounded-button" icon="pi pi-times"
+                                         value="Inactivar" oncomplete="PF('dialogoDesactivar').show();" 
+                                         update=":formDesactivar">
+                        </p:commandButton>
+
+                        <p:commandButton styleClass="ui-button-primary rounded-button mx-2" icon="pi pi-check"
+                                         value="Activar" oncomplete="PF('dialogoActivar').show();" 
+                                         update=":formActivar">
+                        </p:commandButton>
+                    </div>
+
+                    <div align="center" class="my-4">
+                        <h3>Seleccione el usuario de la lista que desea activar o inactivar</h3>
+                    </div>
+
+                    <p:dataTable id="tablaUsuarios" widgetVar="dtUsuarios" paginator="true" var="usuario" 
+                                 value="#{beanMantenimientoUsuario.listadoUsuariosInactivos}"
+                                 styleClass="products-table text-center" rows="3" paginatorPosition="both"
+                                 reflow="true" rowKey="#{usuario.cedula}" selection="#{beanMantenimientoUsuario.usuarioSeleccionado}" selectionMode="single"
+                                 style="width: 100%; height: 50%; text-align: center;">
+
+                        
+
+                        <p:column headerText="Cédula" filterStyle="display: none;" filterBy="#{usuario.cedula}" filterMatchMode="contains" style="text-align: center;">
+                            <h:outputText value="#{usuario.cedula}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre" filterStyle="display: none;" filterBy="#{usuario.nombre}" style="text-align: center;">
+                            <h:outputText value="#{usuario.nombre}"/>
+                        </p:column>
+
+                        <p:column headerText="Primer Apellido" style="text-align: center;">
+                            <h:outputText value="#{usuario.primerApellido}"/>
+                        </p:column>
+
+                        <p:column headerText="Segundo Apellido" style="text-align">
+                            <h:outputText value="#{usuario.segundoApellido}"/>
+                        </p:column>
+
+                        <p:column headerText="Teléfono" style="text-align: center;">
+                            <h:outputText value="#{usuario.telefono}"/>
+                        </p:column>
+
+                        <p:column headerText="Correo Electrónico" style="text-align: center; width: 250px;">
+                            <h:outputText value="#{usuario.email}"/>
+                        </p:column>
+
+                        <p:column headerText="Estado" style="text-align: center;">
+                            <h:outputText value="#{usuario.estado}"/>
+                        </p:column>
+
+                        <p:column headerText="Rol" style="text-align: center;">
+                            <h:outputText value="#{usuario.tipoRol}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formDesactivar">
+                    <p:confirmDialog id="dlgDesactivar" widgetVar="dialogoDesactivar" 
+                                     showEffect="fade" hideEffect="clip" responsive="true"
+                                     width="300" message="¿Seguro que desea desactivar este usuario?" header="Confirmar" severity="warn">
+                        <p:commandButton style="margin: 0 10px;" value="Aceptar" actionListener="#{beanMantenimientoUsuario.inactivarUsuario}" update=":formListadoUsuarios:tablaUsuarios" 
+                                         oncomplete="PF('dialogoDesactivar').hide();"/>
+                        <p:commandButton value="Cancelar" onclick="PF('dialogoDesactivar').hide();"/>
+                    </p:confirmDialog>
+                </h:form>
+
+                <h:form id="formActivar">
+                    <p:confirmDialog id="dlgActivar" widgetVar="dialogoActivar" 
+                                     showEffect="fade" hideEffect="clip" responsive="true"
+                                     width="300" message="¿Seguro que desea activar este usuario?" header="Confirmar" severity="warn">
+                        <p:commandButton style="margin: 0 10px;" value="Aceptar" actionListener="#{beanMantenimientoUsuario.activarUsuario}" update=":formListadoUsuarios:tablaUsuarios" 
+                                         oncomplete="PF('dialogoActivar').hide();"/>
+                        <p:commandButton value="Cancelar" onclick="PF('dialogoActivar').hide();"/>
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
