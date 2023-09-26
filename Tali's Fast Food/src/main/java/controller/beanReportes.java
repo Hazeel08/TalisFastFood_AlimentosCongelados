@@ -11,10 +11,6 @@ import java.util.List;
 import javax.naming.NamingException;
 import model.*;
 
-/**
- *
- * @author steve
- */
 public class beanReportes {
 
     private OrdenDB ordenDB;
