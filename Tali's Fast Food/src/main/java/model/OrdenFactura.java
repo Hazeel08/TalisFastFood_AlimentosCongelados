@@ -4,10 +4,6 @@
  */
 package model;
 
-/**
- *
- * @author steve
- */
 public class OrdenFactura {
 
     private int cod_orden;
